@@ -51,6 +51,8 @@ public class OnDemandValueIterator<S, M extends Model> implements Iterator<S, M>
   // Each string will be added to the temp.txt file.
   protected final List<String> additionalWriteInfo = new ArrayList<>();
 
+  public int totalSamples = 0;
+
   public OnDemandValueIterator(Explorer<S, M> explorer, UnboundedValues values, RewardGenerator<S> rewardGenerator, 
                                int revisitThreshold, double rMax, double precision, long timeout) {
     this.explorer = explorer;
@@ -161,6 +163,7 @@ public class OnDemandValueIterator<S, M extends Model> implements Iterator<S, M>
    */
   protected void onSamplingFinished(int initialState) {
     additionalWriteInfo.add(String.valueOf(explorer.exploredStateCount()));
+    additionalWriteInfo.add(String.valueOf(totalSamples));
   }
 
   /**

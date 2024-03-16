@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="consensus.2-rewards disagree" type="Application" factoryName="Application">
+    <option name="ALTERNATIVE_JRE_PATH" value="11" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <option name="MAIN_CLASS_NAME" value="de.tum.in.pet.Main" />
+    <module name="partial-exploration.main" />
+    <option name="PROGRAM_PARAMETERS" value="meanPayoff -m data/mdpReachRewardModels/consensus/consensus.2-rewards.prism -c K=2 -pMin 0.1083 --informationLevel BLACKBOX --rewardModule disagree -maxReward 1" />
+    <option name="VM_PARAMETERS" value="-ea" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

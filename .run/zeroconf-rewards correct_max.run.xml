@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="zeroconf-rewards correct_max" type="Application" factoryName="Application">
+    <option name="ALTERNATIVE_JRE_PATH" value="11" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <option name="MAIN_CLASS_NAME" value="de.tum.in.pet.Main" />
+    <module name="partial-exploration.main" />
+    <option name="PROGRAM_PARAMETERS" value="meanPayoff -m data/mdpReachRewardModels/zeroconf/zeroconf-rewards.prism -pMin 0.0002 -c N=40,K=10,reset=false --informationLevel BLACKBOX --rewardModule correct_max -maxReward 1" />
+    <option name="VM_PARAMETERS" value="-ea" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

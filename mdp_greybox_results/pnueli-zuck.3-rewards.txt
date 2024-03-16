@@ -1,0 +1,51 @@
+Execution time: 40.292
+Lower bound: 1.0
+Upper bound: 1.0
+Iteration number: 0
+Num states explored: 1577
+Total number of samples: 421641
+
+
+
+Execution time: 27.261
+Lower bound: 1.0
+Upper bound: 1.0
+Iteration number: 1
+Num states explored: 1583
+Total number of samples: 421961
+
+
+
+Execution time: 24.002
+Lower bound: 1.0
+Upper bound: 1.0
+Iteration number: 2
+Num states explored: 1592
+Total number of samples: 423157
+
+
+
+Execution time: 29.055
+Lower bound: 1.0
+Upper bound: 1.0
+Iteration number: 3
+Num states explored: 1549
+Total number of samples: 423069
+
+
+
+Execution time: 34.373
+Lower bound: 1.0
+Upper bound: 1.0
+Iteration number: 4
+Num states explored: 1585
+Total number of samples: 421437
+
+
+
+Average Lower Bound: 1.0
+Average Upper Bound: 1.0
+Average Run time: 30.996599999999994
+Precision: 0.0
+Average number of states explored: 1577.2
+Total samples: 422253.0
