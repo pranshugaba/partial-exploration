@@ -7,7 +7,7 @@ import de.tum.in.pet.sampler.SuccessorHeuristic;
 import de.tum.in.probmodels.explorer.InformationLevel;
 
 public class DefaultInputValues {
-    public static final double PRECISION = 1.0e-6;
+    public static final double PRECISION = 1.0e-2;
     public static final int THRESHOLD = 5;
     public static final double REWARD_UPPERBOUND = 10;
     public static final double P_MIN_LOWERBOUND = 1.0e-6;
