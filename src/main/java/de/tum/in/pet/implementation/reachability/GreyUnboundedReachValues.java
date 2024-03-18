@@ -16,8 +16,8 @@ public class GreyUnboundedReachValues extends BlackUnboundedReachValues {
     private Int2BooleanFunction isInMEC = null;
 
     public GreyUnboundedReachValues(ValueUpdate update, UpdateMethod updateMethod, IntPredicate target, double precision,
-                                     SuccessorHeuristic heuristic) {
-        super(update, updateMethod, target, precision, heuristic);
+                                     SuccessorHeuristic heuristic, double alpha) {
+        super(update, updateMethod, target, precision, heuristic, alpha);
     }
 
     public void setGetNumSuccessors(Int2ObjectFunction<Int2IntFunction> getNumSuccessors) {

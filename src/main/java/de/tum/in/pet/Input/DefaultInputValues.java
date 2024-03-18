@@ -20,4 +20,5 @@ public class DefaultInputValues {
     public static final SimulateMec SIMULATE_MEC = SimulateMec.HEURISTIC;
     public static final String OUTPUT_PATH = "temp.txt";
     public static final DeltaTCalculationMethod DELTA_T_CALCULATION_METHOD = DeltaTCalculationMethod.P_MIN;
+    public static final double ALPHA = 1.0d;
 }

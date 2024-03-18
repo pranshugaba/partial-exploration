@@ -26,6 +26,7 @@ public class InputOptions {
     public static Option outputFile = new Option("o", "outputPath", true, "Path to write the output");
     public static Option maxSuccessorOption = new Option(null, "maxSuccessors", true, "Maximum number of successors in model");
     public static Option deltaTOption = new Option(null, "deltaTMethod", true, "Computation method of Delta T");
+    public static Option alphaOption = new Option(null, "alpha", true, "Optimization for whether to explore best action or uncertain action");
 
     public static Options getAllInputOptions() {
         modelOption.setRequired(true);
@@ -49,6 +50,7 @@ public class InputOptions {
                 .addOption(simulateMec)
                 .addOption(outputFile)
                 .addOption(maxSuccessorOption)
-                .addOption(deltaTOption);
+                .addOption(deltaTOption)
+                .addOption(alphaOption);
     }
 }

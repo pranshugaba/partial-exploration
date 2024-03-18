@@ -23,11 +23,13 @@ public class BlackUnboundedReachValues extends UnboundedReachValues{
   private Int2ObjectFunction<Int2DoubleFunction> confidenceWidthFunction = x -> (y -> (0));
 
   private Int2ObjectMap<Bounds> oldBounds;
+  private final double alpha;
 
   public BlackUnboundedReachValues(ValueUpdate update, UpdateMethod updateMethod, IntPredicate target, double precision,
-                                   SuccessorHeuristic heuristic) {
+                                   SuccessorHeuristic heuristic, double alpha) {
     super(update, target, precision, heuristic);
     this.updateMethod = updateMethod;
+    this.alpha = alpha;
   }
 
   /**
@@ -72,10 +74,16 @@ public class BlackUnboundedReachValues extends UnboundedReachValues{
   @Override
   public int sampleNextAction(int state, List<Distribution> choices){
 
-    ToDoubleFunction<Integer> actionScore = i -> choices.get(i).isEmpty()
-            ? 1 : isSmallestFixPoint()
-                  ? 1.0d - choices.get(i).sumWeighted(this::lowerBound)
-                  : successorBounds(state, choices.get(i), confidenceWidthFunction.apply(state).applyAsDouble(i)).upperBound();
+    ToDoubleFunction<Integer> actionScore = i -> {
+      if (choices.get(i).isEmpty()) {
+        return 1;
+      } else if (isSmallestFixPoint()) {
+        return 1.0d - choices.get(i).sumWeighted(this::lowerBound);
+      } else {
+        return successorBounds(state, choices.get(i), confidenceWidthFunction.apply(state).applyAsDouble(i)).upperBound()
+                - (1.0d - alpha) * successorBounds(state, choices.get(i), confidenceWidthFunction.apply(state).applyAsDouble(i)).lowerBound();
+      }
+    };
 
     return SampleUtil.getOptimalChoice(choices, actionScore);
   }

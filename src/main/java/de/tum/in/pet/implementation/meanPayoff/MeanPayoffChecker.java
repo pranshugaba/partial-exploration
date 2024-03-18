@@ -78,7 +78,7 @@ public final class MeanPayoffChecker {
     else if (inputValues.informationLevel==InformationLevel.BLACKBOX) {
       Double2LongFunction nSampleFunction = s -> inputValues.iterSamples;
 
-      UnboundedValues values = new BlackUnboundedReachValues(ValueUpdate.MAX_VALUE, inputValues.updateMethod, target, inputValues.precision / inputValues.maxReward, inputValues.successorHeuristic);
+      UnboundedValues values = new BlackUnboundedReachValues(ValueUpdate.MAX_VALUE, inputValues.updateMethod, target, inputValues.precision / inputValues.maxReward, inputValues.successorHeuristic, inputValues.alpha);
 
       valueIterator = new CTMDPBlackOnDemandValueIterator<>(explorer, values, rewardGenerator,
               inputValues.revisitThreshold, inputValues.maxReward, inputValues.pMin, inputValues.errorTolerance,
@@ -126,7 +126,7 @@ public final class MeanPayoffChecker {
       Double2LongFunction nSampleFunction = s -> ip.iterSamples;
 
       UnboundedValues values = new BlackUnboundedReachValues(ValueUpdate.MAX_VALUE, ip.updateMethod, target,
-              ip.precision / ip.maxReward, ip.successorHeuristic);
+              ip.precision / ip.maxReward, ip.successorHeuristic, ip.alpha);
 
       valueIterator = new BlackOnDemandValueIterator<>(explorer, values, rewardGenerator,
               ip.revisitThreshold, ip.maxReward, ip.pMin, ip.errorTolerance, nSampleFunction,
@@ -137,7 +137,7 @@ public final class MeanPayoffChecker {
       Double2LongFunction nSampleFunction = s -> ip.iterSamples;
 
       UnboundedValues values = new GreyUnboundedReachValues(ValueUpdate.MAX_VALUE, ip.updateMethod, target,
-              ip.precision / ip.maxReward, ip.successorHeuristic);
+              ip.precision / ip.maxReward, ip.successorHeuristic, ip.alpha);
 
       valueIterator = new GreyOnDemandValueIterator<>(explorer, values, rewardGenerator,
               ip.revisitThreshold, ip.maxReward, ip.pMin, ip.errorTolerance, nSampleFunction,

@@ -24,12 +24,13 @@ public class InputValues {
     public final String outputPath;
     public final int maxSuccessorsInModel;
     public final DeltaTCalculationMethod deltaTCalculationMethod;
+    public final double alpha;
 
 
     public InputValues(double precision, int revisitThreshold, double maxReward, double pMin, double errorTolerance,
                        int iterSamples, long timeout, boolean getErrorProbability, SuccessorHeuristic successorHeuristic,
                        InformationLevel informationLevel, UpdateMethod updateMethod, String rewardStructure, boolean solveUsingQP,
-                       SimulateMec simulateMec, String outputPath, int maxSuccessorsInModel, DeltaTCalculationMethod deltaTCalculationMethod) {
+                       SimulateMec simulateMec, String outputPath, int maxSuccessorsInModel, DeltaTCalculationMethod deltaTCalculationMethod, double alpha) {
         this.precision = precision;
         this.revisitThreshold = revisitThreshold;
         this.maxReward = maxReward;
@@ -47,5 +48,6 @@ public class InputValues {
         this.outputPath = outputPath;
         this.maxSuccessorsInModel = maxSuccessorsInModel;
         this.deltaTCalculationMethod = deltaTCalculationMethod;
+        this.alpha = alpha;
     }
 }

@@ -49,6 +49,7 @@ public class InputParser {
 
         DeltaTCalculationMethod deltaTMethod = CliHelper.parseDeltaTCalculationMethod(
                 commandLine.getOptionValue(InputOptions.deltaTOption.getLongOpt()), DefaultInputValues.DELTA_T_CALCULATION_METHOD);
+        double alpha = parseDoubleOption(commandLine, InputOptions.alphaOption, DefaultInputValues.ALPHA);
 
         return new InputValues(precision,
                 revisitThreshold,
@@ -66,7 +67,8 @@ public class InputParser {
                 simulateMec,
                 outputPath,
                 maxSuccessorsInModel,
-                deltaTMethod);
+                deltaTMethod,
+                alpha);
     }
 
     private static long parseLongOption(CommandLine commandLine, Option option, long defaultValue) {
