@@ -1,6 +1,0 @@
--m data/mdpReachRewardModels/pnueli-zuck-3/pnueli-zuck.3-rewards.prism --precision 0.01 --maxReward 1 --pMin 0.5 --rewardModule live --informationLevel BLACKBOX --updateMethod GREYBOX -o /home/pranshu/partial-exploration/mdp_greybox_results/iteration3/4 
-1710571414126 1710571454418 
-0.0 1.0 
-1.0 1.0 
-1577
-421641

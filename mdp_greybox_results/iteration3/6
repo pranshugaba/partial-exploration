@@ -1,6 +1,0 @@
--m data/mdpReachRewardModels/wlan-0/wlan.0-rewards.prism --precision 0.01 --maxReward 1 --pMin 0.0625 -c COL=0 --rewardModule sent --informationLevel BLACKBOX --updateMethod GREYBOX -o /home/pranshu/partial-exploration/mdp_greybox_results/iteration3/6 
-1710571461674 1710571476581 
-0.0 1.0 
-1.0 1.0 
-2937
-842010
