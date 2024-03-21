@@ -2,6 +2,7 @@ import argparse
 import os
 import inputOptions
 import modelConfigurations
+from runNExperiments import alphaValues
 from ParallelRange import get_thread_allocations
 from multiprocessing import Pool
 
@@ -63,10 +64,14 @@ input_values = inputOptions.parse_user_input(parser.parse_args())
 
 # Benchmark type
 runConfigs = None
+runConfigsInputs = None
 if input_values.is_ctmdp:
-    runConfigs = modelConfigurations.ctmdpConfigs
+    runConfigsInputs = modelConfigurations.ctmdpConfigs
 else:
-    runConfigs = modelConfigurations.mdpConfigs
+    runConfigsInputs = modelConfigurations.mdpConfigs
+
+runConfigs = [f"{config} --alpha {alphaValue}" for config in runConfigsInputs for alphaValue in alphaValues]
+print(len(runConfigs))
 
 # Information level
 for i in range(len(runConfigs)):

@@ -2,7 +2,7 @@ from maxRewards import get_max_reward
 import os
 
 class ModelResult:
-    def __init__(self, model_name, times, lower_bounds, upper_bounds, num_explored_states, missing_probability, iteration_number, total_samples):
+    def __init__(self, model_name, times, lower_bounds, upper_bounds, num_explored_states, missing_probability, iteration_number, total_samples, alpha):
         self.model_name = model_name
         self.times = times
         self.lower_bounds = lower_bounds
@@ -11,6 +11,7 @@ class ModelResult:
         self.missing_probability = missing_probability
         self.iteration_number = iteration_number
         self.total_samples = total_samples
+        self.alpha = alpha
 
     def get_runtime(self):
         time_taken_millis = self.times[-1] - self.times[0]
@@ -38,12 +39,13 @@ def parse_output_file(file_name, iteration_number=0):
     scaled_upper_bounds = [x/get_max_reward(model_name) for x in upper_bound]
     explored_states = int(content[3])
     total_samples = int(content[4])
+    alpha = float(content[5])
 
     missing_probability = None
-    if len(content) > 4:
-        missing_probability = float(content[4])
+    if len(content) > 5:
+        missing_probability = float(content[5])
 
-    return ModelResult(model_name, times, scaled_lower_bounds, scaled_upper_bounds, explored_states, missing_probability, iteration_number,total_samples)
+    return ModelResult(model_name, times, scaled_lower_bounds, scaled_upper_bounds, explored_states, missing_probability, iteration_number, total_samples, alpha)
 
 
 def accumulate_results(resultDirectory):
@@ -64,9 +66,12 @@ def accumulate_results(resultDirectory):
             model_result = parse_output_file(file_path, num_iterations)
 
             if model_result.model_name not in benchmark_info:
-                benchmark_info[model_result.model_name] = []
+                benchmark_info[model_result.model_name] = {}
 
-            benchmark_info[model_result.model_name].append(model_result)
+            if model_result.alpha not in benchmark_info[model_result.model_name]:
+                benchmark_info[model_result.model_name][model_result.alpha] = []
+
+            benchmark_info[model_result.model_name][model_result.alpha].append(model_result)
 
         num_iterations = num_iterations + 1
 

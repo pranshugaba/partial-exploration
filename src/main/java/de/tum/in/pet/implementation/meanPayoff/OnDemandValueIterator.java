@@ -51,7 +51,7 @@ public class OnDemandValueIterator<S, M extends Model> implements Iterator<S, M>
   // Each string will be added to the temp.txt file.
   protected final List<String> additionalWriteInfo = new ArrayList<>();
 
-  public int totalSamples = 0;
+  public int totalActionsSampled = 0;
 
   public OnDemandValueIterator(Explorer<S, M> explorer, UnboundedValues values, RewardGenerator<S> rewardGenerator, 
                                int revisitThreshold, double rMax, double precision, long timeout) {
@@ -133,8 +133,9 @@ public class OnDemandValueIterator<S, M extends Model> implements Iterator<S, M>
 
     // isSolved() defined in UnboundedReachValues
     while(!(values.isSolved(representative)|| isTimeout())) {  // The values between upper and lower bounds for the initial states should,be less than epsilon
-//      logger.log(Level.INFO, "Run "+run);
       logger.log(Level.INFO, values.bounds(representative).toString());
+      logger.log(Level.INFO, "Run " + run);
+      logger.log(Level.INFO, "Total Actions Sampled " + totalActionsSampled);
       if (sample(representative, run)) {
         // initialState may be part of an MEC and the MEC may be collapsed, and we may have a representative that is different
         // from initialState
@@ -142,9 +143,6 @@ public class OnDemandValueIterator<S, M extends Model> implements Iterator<S, M>
       }
       timeVBound.add(new Pair<>(System.currentTimeMillis(), Bounds.of(this.rMax*bounds(initialState).lowerBound(), this.rMax*bounds(initialState).upperBound())));
       run++;  // count of episodic runs
-      if (run%1000==0){
-//        logger.log(Level.INFO, "Bounds "+bounds(representative));
-      }
     }
 
     onSamplingFinished(initialState);
@@ -163,7 +161,7 @@ public class OnDemandValueIterator<S, M extends Model> implements Iterator<S, M>
    */
   protected void onSamplingFinished(int initialState) {
     additionalWriteInfo.add(String.valueOf(explorer.exploredStateCount()));
-    additionalWriteInfo.add(String.valueOf(totalSamples));
+    additionalWriteInfo.add(String.valueOf(totalActionsSampled));
   }
 
   /**

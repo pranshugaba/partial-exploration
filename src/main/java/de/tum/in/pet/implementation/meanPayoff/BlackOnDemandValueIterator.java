@@ -99,7 +99,6 @@ public class BlackOnDemandValueIterator<S, M extends Model> extends OnDemandValu
       IntList visitStack = new IntArrayList();
       int currentState = initialState;
       Int2IntOpenHashMap stateVisitCounts = new Int2IntOpenHashMap();  // keeps counts of the number of times a state is visited
-      // totalSamples = 0;
 
       while (true) {
         // Stop simulation if timeout occurred
@@ -177,13 +176,12 @@ public class BlackOnDemandValueIterator<S, M extends Model> extends OnDemandValu
 
       }
 
-      //logger.log(Level.INFO, "Sample number " + i);
-      //logger.log(Level.INFO, "State visit counts " + stateVisitCounts);
-      //logger.log(Level.INFO, "Total states sampled in this run " + totalSamples);
+      logger.log(Level.INFO, "Sample number " + i);
+      logger.log(Level.INFO, "Total states sampled in this run " + totalActionsSampled);
 
     }
 
-    logger.log(Level.INFO, "Total samples " + totalSamples);
+    logger.log(Level.INFO, "Total samples " + totalActionsSampled);
 
     handleComponents();
 
@@ -235,9 +233,7 @@ public class BlackOnDemandValueIterator<S, M extends Model> extends OnDemandValu
   }
 
   private int sampleNextAction(int currentState) {
-    totalSamples += 1;
-    // logger.log(Level.INFO, "Sampling from state: " + currentState);
-    // logger.log(Level.INFO, "Total states sampled: " + totalSamples);
+    totalActionsSampled += 1;
 
     BlackExplorer<S, M> explorer = (BlackExplorer<S, M>) this.explorer;
 
@@ -586,6 +582,9 @@ public class BlackOnDemandValueIterator<S, M extends Model> extends OnDemandValu
   @Override
   protected void onSamplingFinished(int initialState) {
     super.onSamplingFinished(initialState);
+
+    BlackUnboundedReachValues values = (BlackUnboundedReachValues) this.values;
+    additionalWriteInfo.add(String.valueOf(values.alpha));
 
     if (calculateErrorProbability) {
       logger.log(Level.INFO, "Computing error probability");

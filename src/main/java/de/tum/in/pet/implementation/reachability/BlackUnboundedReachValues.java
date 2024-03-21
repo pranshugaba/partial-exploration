@@ -23,7 +23,7 @@ public class BlackUnboundedReachValues extends UnboundedReachValues{
   private Int2ObjectFunction<Int2DoubleFunction> confidenceWidthFunction = x -> (y -> (0));
 
   private Int2ObjectMap<Bounds> oldBounds;
-  private final double alpha;
+  public final double alpha;
 
   public BlackUnboundedReachValues(ValueUpdate update, UpdateMethod updateMethod, IntPredicate target, double precision,
                                    SuccessorHeuristic heuristic, double alpha) {
