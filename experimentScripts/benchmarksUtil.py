@@ -2,7 +2,7 @@ from maxRewards import get_max_reward
 import os
 
 class ModelResult:
-    def __init__(self, model_name, times, lower_bounds, upper_bounds, num_explored_states, missing_probability, iteration_number, total_samples, alpha):
+    def __init__(self, model_name, times, lower_bounds, upper_bounds, num_explored_states, missing_probability, iteration_number, total_samples, total_simulations, iter_sample, alpha):
         self.model_name = model_name
         self.times = times
         self.lower_bounds = lower_bounds
@@ -11,6 +11,8 @@ class ModelResult:
         self.missing_probability = missing_probability
         self.iteration_number = iteration_number
         self.total_samples = total_samples
+        self.total_simulations = total_simulations
+        self.iter_sample = iter_sample
         self.alpha = alpha
 
     def get_runtime(self):
@@ -39,13 +41,15 @@ def parse_output_file(file_name, iteration_number=0):
     scaled_upper_bounds = [x/get_max_reward(model_name) for x in upper_bound]
     explored_states = int(content[3])
     total_samples = int(content[4])
-    alpha = float(content[5])
+    total_simulations = int(content[5])
+    iter_sample = int(content[6])
+    alpha = float(content[7])
 
     missing_probability = None
-    if len(content) > 5:
-        missing_probability = float(content[5])
+    if len(content) > 7:
+        missing_probability = float(content[7])
 
-    return ModelResult(model_name, times, scaled_lower_bounds, scaled_upper_bounds, explored_states, missing_probability, iteration_number, total_samples, alpha)
+    return ModelResult(model_name, times, scaled_lower_bounds, scaled_upper_bounds, explored_states, missing_probability, iteration_number, total_samples, total_simulations, iter_sample, alpha)
 
 
 def accumulate_results(resultDirectory):
@@ -84,17 +88,20 @@ def get_average_values(model_result_list):
     average_run_time = 0
     average_states_explored = 0
     average_total_samples = 0
+    average_total_simulations = 0
     for model_result in model_result_list:
         average_lower_bound += model_result.lower_bounds[-1]
         average_upper_bound += model_result.upper_bounds[-1]
         average_run_time += model_result.get_runtime()
         average_states_explored += model_result.num_explored_states
         average_total_samples += model_result.total_samples
+        average_total_simulations += model_result.total_simulations
 
     average_lower_bound /= len(model_result_list)
     average_upper_bound /= len(model_result_list)
     average_run_time /= len(model_result_list)
     average_states_explored /= len(model_result_list)
     average_total_samples /= len(model_result_list)
+    average_total_simulations /= len(model_result_list)
 
-    return average_lower_bound, average_upper_bound, average_run_time, average_states_explored, average_total_samples
+    return average_lower_bound, average_upper_bound, average_run_time, average_states_explored, average_total_samples, average_total_simulations

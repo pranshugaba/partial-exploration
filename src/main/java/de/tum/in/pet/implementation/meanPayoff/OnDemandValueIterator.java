@@ -52,6 +52,7 @@ public class OnDemandValueIterator<S, M extends Model> implements Iterator<S, M>
   protected final List<String> additionalWriteInfo = new ArrayList<>();
 
   public int totalActionsSampled = 0;
+  public int totalSimulations = 0;
 
   public OnDemandValueIterator(Explorer<S, M> explorer, UnboundedValues values, RewardGenerator<S> rewardGenerator, 
                                int revisitThreshold, double rMax, double precision, long timeout) {
@@ -145,6 +146,9 @@ public class OnDemandValueIterator<S, M extends Model> implements Iterator<S, M>
       run++;  // count of episodic runs
     }
 
+    logger.log(Level.INFO, "Total number of actions sampled in this iteration: " + totalActionsSampled);
+    logger.log(Level.INFO, "Total number of runs in this iteration: " + run);
+    logger.log(Level.INFO, "Total number of simulations in this iteration: " + totalSimulations);
     onSamplingFinished(initialState);
   }
 
@@ -162,6 +166,7 @@ public class OnDemandValueIterator<S, M extends Model> implements Iterator<S, M>
   protected void onSamplingFinished(int initialState) {
     additionalWriteInfo.add(String.valueOf(explorer.exploredStateCount()));
     additionalWriteInfo.add(String.valueOf(totalActionsSampled));
+    additionalWriteInfo.add(String.valueOf(totalSimulations));
   }
 
   /**

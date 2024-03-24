@@ -70,8 +70,10 @@ else:
     runConfigsInputs = modelConfigurations.mdpConfigs
 
 alphaValues = [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
+# alphaValues = [1.0, 0.5, 0.0]
+iterSamples = [1000, 10000]
 
-runConfigs = [f"{config} --alpha {alphaValue}" for config in runConfigsInputs for alphaValue in alphaValues]
+runConfigs = [f"{config} --alpha {alphaValue} --iterSamples {iterSample}" for config in runConfigsInputs for alphaValue in alphaValues for iterSample in iterSamples]
 print(len(runConfigs))
 
 # Information level

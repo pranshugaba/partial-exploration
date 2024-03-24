@@ -1,5 +1,5 @@
-nExperiments=20
-nThreads=10
+nExperiments=10
+nThreads=20
 
 while getopts n:t: flag; do
   case "${flag}" in

@@ -8,6 +8,10 @@ import argparse
 from ParallelRange import get_thread_allocations
 
 
+alphaValues = [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
+# alphaValues = [1.0, 0.5, 0.0]
+iterSamples = [1000, 10000]
+
 def get_exec_command_from_input():
     global input_values
     dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -81,6 +85,8 @@ def write_model_result(result_file, model_result):
     result_file.write('Iteration number: ' + str(model_result.iteration_number) + '\n')
     result_file.write('Num states explored: ' + str(model_result.num_explored_states) + '\n')
     result_file.write('Total number of samples: ' + str(model_result.total_samples) + '\n')
+    result_file.write('Total number of simulations: ' + str(model_result.total_simulations) + '\n')
+    result_file.write('Value of iterSamples: ' + str(model_result.iter_sample) + '\n')
     result_file.write('Value of alpha: ' + str(model_result.alpha) + '\n')
     result_file.write('\n')
     result_file.write('\n')
@@ -91,18 +97,25 @@ def write_model_results(model_name, model_result_list, alpha_value, result_direc
     print(model_name)
     result_file_name = f"{result_directory}{model_name}-{alpha_value}.txt"
 
+
     with open(result_file_name, 'w') as result_file:
         for model_result in model_result_list:
             write_model_result(result_file, model_result)
 
-        (al, au, ar, av_states, total_samples) = benchmarksUtil.get_average_values(model_result_list)
-        precision = au - al
-        result_file.write('Average Lower Bound: ' + str(al) + '\n')
-        result_file.write('Average Upper Bound: ' + str(au) + '\n')
-        result_file.write('Average Run time: ' + str(ar) + '\n')
-        result_file.write('Precision: ' + str(precision) + '\n')
-        result_file.write('Average number of states explored: ' + str(av_states) + '\n')
-        result_file.write('Average number of samples per iteration: ' + str(total_samples) + '\n')
+        for iterSample in iterSamples:
+
+            result_file.write('IterSample: ' + str(iterSample) + '\n')
+            filteredOutput = [y for y in model_result_list if y.iter_sample == iterSample]
+
+            (al, au, ar, av_states, av_total_samples, av_total_simulations) = benchmarksUtil.get_average_values(filteredOutput)
+            precision = au - al
+            result_file.write('Average Lower Bound: ' + str(al) + '\n')
+            result_file.write('Average Upper Bound: ' + str(au) + '\n')
+            result_file.write('Average Run time: ' + str(ar) + '\n')
+            result_file.write('Precision: ' + str(precision) + '\n')
+            result_file.write('Average number of states explored: ' + str(av_states) + '\n')
+            result_file.write('Average number of samples per iteration: ' + str(av_total_samples) + '\n')
+            result_file.write('Average number of simulations per iteration: ' + str(av_total_simulations) + '\n\n\n')
 
 
 def write_results(results, result_directory):
@@ -116,27 +129,44 @@ def plot_alpha_graphs(results, result_directory):
     if not os.path.isdir(plotsDir):
         os.makedirs(plotsDir)
     for model_name, model_result_list in results.items():
-        xValues = []
-        yValues = []
-        for alpha_value in alphaValues:
-            xValues.append(alpha_value)
-            yValues.append(sum([y.total_samples for y in model_result_list[alpha_value]]) / len(model_result_list[alpha_value]))
 
-#        yValues = [sum([y.total_samples for y in x])/ len(x) for x in list(model_result_list.values())]
-        alphaValues = [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
-        # alphaValues = [1.0, 0.5, 0.0]
-        print(xValues)
-        print(yValues)
-        plt.plot(xValues, yValues)
-        plt.legend()
-        plt.xlabel("alpha")
-        plt.ylabel("Total Actions Sampled")
-        filename = f"{model_name.replace('.', '-')}.png"
-        plt.title(model_name)
-        print("Saving graphs at")
-        print(os.path.join(plotsDir, filename))
-        plt.savefig(os.path.join(plotsDir, filename))
-        plt.close()
+        for iterSample in iterSamples:
+            xValues = []
+            totalSamplesValues = []
+            totalSimulationsValues = []
+
+            for alpha_value in alphaValues:
+                xValues.append(alpha_value)
+                filteredOutput = [y for y in model_result_list[alpha_value] if y.iter_sample == iterSample]
+                totalSamplesValues.append(sum([y.total_samples for y in filteredOutput]) / len(filteredOutput))
+                totalSimulationsValues.append(sum([y.total_simulations for y in filteredOutput]) / len(filteredOutput))
+
+    #        yValues = [sum([y.total_samples for y in x])/ len(x) for x in list(model_result_list.values())]
+            print(xValues)
+            print(totalSamplesValues)
+            plt.plot(xValues, totalSamplesValues, "C1", label="total samples")
+            plt.legend()
+            plt.xlabel("alpha")
+            plt.ylabel("Total Actions Sampled")
+            samples_filename = f"{model_name.replace('.', '-')}-samples-{iterSample}.png"
+            plt.title(f"{model_name} {iterSample}")
+            print("Saving graphs at")
+            print(os.path.join(plotsDir, samples_filename))
+            plt.savefig(os.path.join(plotsDir, samples_filename))
+            plt.close()
+
+            print(xValues)
+            print(totalSimulationsValues)
+            plt.plot(xValues, totalSimulationsValues, "C2", label="total simulations")
+            plt.legend()
+            plt.xlabel("alpha")
+            plt.ylabel("Total simulations")
+            simulations_filename = f"{model_name.replace('.', '-')}-simulations-{iterSample}.png"
+            plt.title(f"{model_name} {iterSample}")
+            print("Saving graphs at")
+            print(os.path.join(plotsDir, simulations_filename))
+            plt.savefig(os.path.join(plotsDir, simulations_filename))
+            plt.close()
 
 
 def remove_old_results():

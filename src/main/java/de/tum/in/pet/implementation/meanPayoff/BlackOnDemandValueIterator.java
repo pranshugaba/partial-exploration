@@ -99,6 +99,7 @@ public class BlackOnDemandValueIterator<S, M extends Model> extends OnDemandValu
       IntList visitStack = new IntArrayList();
       int currentState = initialState;
       Int2IntOpenHashMap stateVisitCounts = new Int2IntOpenHashMap();  // keeps counts of the number of times a state is visited
+      totalSimulations += 1;
 
       while (true) {
         // Stop simulation if timeout occurred
@@ -182,6 +183,9 @@ public class BlackOnDemandValueIterator<S, M extends Model> extends OnDemandValu
     }
 
     logger.log(Level.INFO, "Total samples " + totalActionsSampled);
+    logger.log(Level.INFO, "nSampleFunction(1) " + nSampleFunction.apply(1.0d));
+    logger.log(Level.INFO, "nSampleFunction(2) " + nSampleFunction.apply(2.0d));
+
 
     handleComponents();
 
@@ -584,6 +588,7 @@ public class BlackOnDemandValueIterator<S, M extends Model> extends OnDemandValu
     super.onSamplingFinished(initialState);
 
     BlackUnboundedReachValues values = (BlackUnboundedReachValues) this.values;
+    additionalWriteInfo.add(String.valueOf(this.nSampleFunction.apply(1.0)));
     additionalWriteInfo.add(String.valueOf(values.alpha));
 
     if (calculateErrorProbability) {
