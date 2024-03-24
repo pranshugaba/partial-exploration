@@ -1,11 +1,11 @@
 mdpConfigs = [
-    "meanPayoff -m data/mdpReachRewardModels/consensus/consensus.2-rewards.prism       --precision 0.01 --maxReward 1 --pMin 0.1083 --const K=2 --rewardModule disagree",
-    "meanPayoff -m data/mdpReachRewardModels/csma/csma.2-2-rewards.prism               --precision 0.01  --maxReward 1 --pMin 0.25 --rewardModule some_before",
-    "meanPayoff -m data/mdpReachRewardModels/pacman/pacman-rewards.prism               --precision 0.01  --maxReward 1 --pMin 0.08 --const MAXSTEPS=5 --rewardModule crash",
-    "meanPayoff -m data/mdpReachRewardModels/pnueli-zuck-3/pnueli-zuck.3-rewards.prism --precision 0.01 --maxReward 1 --pMin 0.5 --rewardModule live",
+#    "meanPayoff -m data/mdpReachRewardModels/consensus/consensus.2-rewards.prism       --precision 0.01 --maxReward 1 --pMin 0.1083 --const K=2 --rewardModule disagree",
+#    "meanPayoff -m data/mdpReachRewardModels/csma/csma.2-2-rewards.prism               --precision 0.01  --maxReward 1 --pMin 0.25 --rewardModule some_before",
+#    "meanPayoff -m data/mdpReachRewardModels/pacman/pacman-rewards.prism               --precision 0.01  --maxReward 1 --pMin 0.08 --const MAXSTEPS=5 --rewardModule crash",
+#    "meanPayoff -m data/mdpReachRewardModels/pnueli-zuck-3/pnueli-zuck.3-rewards.prism --precision 0.01 --maxReward 1 --pMin 0.5 --rewardModule live",
     "meanPayoff -m data/mdpReachRewardModels/rabin-3/rabin.3-rewards.prism             --precision 0.01 --maxReward 1 --pMin 0.03125 --rewardModule live",
-    "meanPayoff -m data/mdpReachRewardModels/wlan-0/wlan.0-rewards.prism               --precision 0.01 --maxReward 1 --pMin 0.0625 --const COL=0 --rewardModule sent",
-    "meanPayoff -m data/mdpReachRewardModels/zeroconf/zeroconf-rewards.prism           --precision 0.01 --maxReward 1 --pMin 0.0002 --const N=40,K=10,reset=false --rewardModule correct_max",
+#    "meanPayoff -m data/mdpReachRewardModels/wlan-0/wlan.0-rewards.prism               --precision 0.01 --maxReward 1 --pMin 0.0625 --const COL=0 --rewardModule sent",
+#    "meanPayoff -m data/mdpReachRewardModels/zeroconf/zeroconf-rewards.prism           --precision 0.01 --maxReward 1 --pMin 0.0002 --const N=40,K=10,reset=false --rewardModule correct_max",
 ]
 
 #mdpConfigs = [

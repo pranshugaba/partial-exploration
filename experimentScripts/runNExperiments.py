@@ -7,8 +7,6 @@ import inputOptions
 import argparse
 from ParallelRange import get_thread_allocations
 
-alphaValues = [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
-# alphaValues = [1.0, 0.5, 0.0]
 
 def get_exec_command_from_input():
     global input_values
@@ -125,6 +123,8 @@ def plot_alpha_graphs(results, result_directory):
             yValues.append(sum([y.total_samples for y in model_result_list[alpha_value]]) / len(model_result_list[alpha_value]))
 
 #        yValues = [sum([y.total_samples for y in x])/ len(x) for x in list(model_result_list.values())]
+        alphaValues = [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
+        # alphaValues = [1.0, 0.5, 0.0]
         print(xValues)
         print(yValues)
         plt.plot(xValues, yValues)
